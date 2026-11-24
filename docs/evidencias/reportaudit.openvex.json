@@ -1,0 +1,16 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/PabloVip/reportaudit-lab/vex/2026-001",
+  "author": "Pablo Vicente <pablovicente29@hotmail.com>",
+  "timestamp": "2026-10-05T17:30:00Z",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-2024-49766" },
+      "products": [{ "@id": "pkg:pypi/werkzeug@3.0.1" }],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2024-49766 afecta a safe_join() solo en Windows. ReportAudit corre en Linux (CachyOS nativo y ubuntu-latest en CI) y nunca llama a safe_join: sirve JSON con jsonify (app/servicio.py) y concatena rutas solo con os.path.join en reporte_auditoria.py:24. El código vulnerable no está en la ruta de ejecución."
+    }
+  ]
+}
