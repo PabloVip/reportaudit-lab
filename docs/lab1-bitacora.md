@@ -169,11 +169,17 @@ Una alerta de Dependabot avisa y propone un PR, pero no impide fusionar nada; el
 
 ### Q. Divulgación coordinada (simulacro)
 
-- Informe recibido de (usuario de GitHub):
-- Identificador del borrador de aviso (GHSA-…):
-- Severidad y vector CVSS:
-- CWE:
-- Versiones afectadas / versión corregida:
+- Informe recibido de (usuario de GitHub): ninguno (ver nota)
+- Identificador del borrador de aviso (GHSA-…): GHSA-3qrq-45g5-v9r7 (estado *draft*)
+- Severidad y vector CVSS: High, 7,5 — `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N`
+- CWE: CWE-89 (SQL Injection)
+- Versiones afectadas / versión corregida: `< 1.0.0` / `1.0.0` (ecosistema pip, paquete `reportaudit`, función `buscar_reportes_cliente`)
+
+Nota: el simulacro no se hizo en pareja. Mi compañero no llegó a enviar el informe por "Report a vulnerability" y su repositorio no tiene activado el canal privado, así que tampoco pude hacer de investigador en el suyo. Creé el borrador directamente como responsable del repositorio, con el título, los detalles, la prueba con `o'brien_ltd` y el impacto que habría tenido el informe. No pedí CVE ni lo publiqué. Por eso el borrador no tiene créditos.
+
+Elegí `C:H` porque la inyección permite leer los reportes de todos los clientes, e `I:N` y `A:N` porque `cursor.execute` de sqlite3 no ejecuta sentencias encadenadas: se pueden leer datos, pero no modificarlos con esta consulta.
+
+El investigador no debe abrir un Issue porque es público desde el primer momento y publicaría cómo atacar el producto antes de que exista el parche. Con el borrador privado, el responsable puede confirmar el fallo, calcular la severidad y preparar la corrección (incluso en una bifurcación privada temporal) antes de publicar el aviso junto con la versión corregida. La obligación de notificación de la CRA que estudiamos en la P2 (alerta temprana en 24 horas, notificación en 72 horas e informe final) se activa cuando una vulnerabilidad se está explotando activamente; aquí no hay explotación, solo un fallo ya corregido en la 1.0.0, así que no aplica.
 
 ### R. Versión 1.0.0 verificable
 
@@ -272,7 +278,7 @@ Sigue sin existir: el tiempo de respuesta medido y un SLA de parcheo (no hay dat
 | #7 | Publish the audit log and the before/after evidence | PR #30 fusionado |
 | #8 | Detect ReportAudit credentials in the whole Git history | PR #24 fusionado |
 | #9 | Make SCA and secret scanning required checks on main | PR #28 fusionado + PR de prueba #29 cerrado sin fusionar; cerrado a mano tras P.4 |
-| #10 | Publish a security policy and a private vulnerability reporting channel | PR #25 fusionado + canal privado activado; falta el simulacro Q.3 con el compañero |
+| #10 | Publish a security policy and a private vulnerability reporting channel | PR #25 fusionado + canal privado activado + borrador de aviso GHSA-3qrq-45g5-v9r7; cerrado a mano tras Q.3 |
 | #11 | Release v1.0.0 with an SBOM and signed provenance | PR #26 fusionado + Release v1.0.0 verificada; cerrado a mano tras R.3 |
 | #12 | Measure supply-chain maturity with OpenSSF Scorecard | PR #27 fusionado |
 | #13 | Build the CRA evidence index | PR de la Parte T (expediente y bitácora final) |
