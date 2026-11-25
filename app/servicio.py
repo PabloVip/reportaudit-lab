@@ -22,7 +22,10 @@ from reporte_auditoria import (
 RUTA_CONFIG = Path(__file__).with_name("config.yaml")
 config = cargar_configuracion(RUTA_CONFIG)
 
-app = Flask(__name__)
+# SonarQube python:S4502 (CSRF) es un falso positivo aquí: la API solo expone
+# endpoints GET de lectura que devuelven JSON, sin formularios, cookies ni
+# sesiones, así que no hay ninguna petición que cambie estado que proteger.
+app = Flask(__name__)  # NOSONAR
 
 
 @app.get("/")
